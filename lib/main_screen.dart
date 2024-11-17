@@ -26,38 +26,44 @@ class MainScreen extends StatelessWidget {
                         MaterialPageRoute(
                             builder: (context) => DetailScreen(place: place)));
                   },
-                  child: Card(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  bottomLeft: Radius.circular(12)),
-                              child: Image.asset(place.imageAsset),
-                            )),
-                        Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    place.name,
-                                    style: const TextStyle(fontSize: 16.0),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(place.location)
-                                ],
-                              ),
-                            ))
-                      ],
+                  child: Container(
+                    height: 125,
+                    child: Card(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(12),
+                                    bottomLeft: Radius.circular(12)),
+                                child: Image.asset(
+                                  place.imageAsset,
+                                  fit: BoxFit.cover,
+                                ),
+                              )),
+                          Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      place.name,
+                                      style: const TextStyle(fontSize: 16.0),
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(place.location)
+                                  ],
+                                ),
+                              ))
+                        ],
+                      ),
                     ),
                   ),
                 );
