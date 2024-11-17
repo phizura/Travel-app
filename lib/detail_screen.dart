@@ -123,7 +123,7 @@ class DetailScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(4.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(15),
-                        child: Image.asset('images/1.jpg'),
+                        child: Image.network(url),
                       ),
                     );
                   }).toList()
