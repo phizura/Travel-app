@@ -1,7 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:travel_app/model/tourism_place.dart';
+
+class FavoriteButton extends StatefulWidget {
+  const FavoriteButton({super.key});
+
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () {
+          setState(() {
+            isFavorite = !isFavorite;
+          });
+        },
+        icon: Icon(
+          isFavorite ? Icons.favorite : Icons.favorite_border,
+          color: Colors.red,
+        ));
+  }
+}
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key});
+  final TourismPlace place;
+  const DetailScreen({super.key, required this.place});
 
   @override
   Widget build(BuildContext context) {
@@ -10,46 +36,67 @@ class DetailScreen extends StatelessWidget {
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Image.asset('images/kebun-pakbudi.jpeg'),
+            Stack(
+              children: [
+                Image.asset(place.imageAsset),
+                SafeArea(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CircleAvatar(
+                                backgroundColor: Colors.grey,
+                                child: IconButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  icon: const Icon(Icons.arrow_back),
+                                  color: Colors.white,
+                                )),
+                            const FavoriteButton()
+                          ],
+                        )))
+              ],
+            ),
             Container(
               margin: const EdgeInsets.only(top: 16.0),
-              child: const Text(
-                'Kebun Pak Budi',
+              child: Text(
+                place.name,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 30.0, fontWeight: FontWeight.bold),
               ),
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 16.0),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Column(
                     children: [
-                      Icon(Icons.calendar_today),
+                      const Icon(Icons.calendar_today),
                       Text(
-                        'Open Everyday',
-                        style: TextStyle(
+                        place.openDays,
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.normal),
                       )
                     ],
                   ),
                   Column(
                     children: [
-                      Icon(Icons.access_time),
+                      const Icon(Icons.access_time),
                       Text(
-                        '09:00 - 20:00',
-                        style: TextStyle(
+                        place.openTime,
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.normal),
                       )
                     ],
                   ),
                   Column(
                     children: [
-                      Icon(Icons.monetization_on),
+                      const Icon(Icons.monetization_on),
                       Text(
-                        'Rp. 25.000',
-                        style: TextStyle(
+                        place.ticketPrice,
+                        style: const TextStyle(
                             fontSize: 14, fontWeight: FontWeight.normal),
                       )
                     ],
@@ -60,40 +107,28 @@ class DetailScreen extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(top: 3.0),
               padding: const EdgeInsets.all(18.0),
-              child: const Text(
-                'Sedang mencari tempat wisata yang seru dan lengkap untuk keluarga? Ayo, kunjungi Wisata Edukasi & Resort Kebun Pak Budi! Tempat ini menawarkan beragam wahana dan fasilitas untuk anak-anak dan dewasa, mulai dari kolam renang yang menyegarkan hingga area kelinci yang menggemaskan. Nikmati udara sejuk dan segar yang menyelimuti kawasan ini, membuat harimu semakin sempurna. Baik untuk bersantai, menjelajah, atau sekadar bersenang-senang, Kebun Pak Budi adalah tempat ideal untuk hari keluarga yang tak terlupakan!',
+              child: Text(
+                place.description,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+                style: const TextStyle(
+                    fontSize: 16.0, fontWeight: FontWeight.normal),
               ),
             ),
             SizedBox(
               height: 150,
               child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset('images/1.jpg'),
-                    ),
+                  scrollDirection: Axis.horizontal,
+                  children: place.imageUrls.map((url) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.asset('images/1.jpg'),
+                      ),
+                    );
+                  }).toList()
+                  //
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset('images/2.jpg'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(15),
-                      child: Image.asset('images/3.jpg'),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ]),
     ));
